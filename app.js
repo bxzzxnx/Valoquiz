@@ -1,3 +1,4 @@
+// TODO Refatorar código
 const form = document.querySelector('.quiz-form');
 const result = document.querySelector('.result');
 
@@ -6,7 +7,6 @@ const playQuiz = event => {
     event.preventDefault();
 
     // consts
-    // TODO refatorar esse array
     const userAnswers = [
         form.inputQuestion1.value,
         form.inputQuestion2.value,
