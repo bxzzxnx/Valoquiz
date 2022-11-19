@@ -1,52 +1,51 @@
 const form = document.querySelector('.quiz-form');
-const result = document.querySelector('.result');
-
+const result = document.querySelector('.final-score');
 const correctAnswers = ['B','C','A','B','D','A','D','C'];
-const playQuiz = event => {
-    event.preventDefault();
 
-    // consts
-    const userAnswers = [
-        form.inputQuestion1.value,
-        form.inputQuestion2.value,
-        form.inputQuestion3.value,
-        form.inputQuestion4.value,
-        form.inputQuestion5.value,
-        form.inputQuestion6.value,
-        form.inputQuestion7.value,
-        form.inputQuestion8.value,
-    ];
-    const percent = 100 / userAnswers.length;
-    let score = 0;
-    let counter = 0;
+let score = 0;
+const percent = 100 / correctAnswers.length;
 
-    // functions
-    const checkUserAnswers = (answer, index) => {
+const getUserAnswers = () =>correctAnswers.map((_, index) => {
+    return form[`inputQuestion${index + 1}`].value
+})
+
+const calculateScore = (userAnswers) =>{
+    userAnswers.forEach((answer, index) => {
         if(answer === correctAnswers[index]){
             score += percent;
         }
-    };
-    const toTop = () => {
-        scroll({
-            top: 0,
-            behavior: 'smooth'
-        })
-    };
-    const showResult = () =>{
+    })
+};
+
+const showFinalScore = () =>{
+    scroll({
+        top: 0,
+        behavior: 'smooth'
+    })
+    result.classList.remove('d-none')
+};
+
+const animateFinalScore = () =>{
+    let counter = 0;
+    const timer = setInterval(() =>{
         if(counter === score){
             clearInterval(timer);
         }
         result.querySelector('span').textContent = `${counter}%`;
         counter += .5
-    };
-
-    const timer = setInterval(showResult, 15);
-    userAnswers.forEach(checkUserAnswers);
-    setTimeout(toTop, 100);
-    result.classList.remove('d-none')
+    }, 10)
 };
-// event listener
-form.addEventListener('submit', playQuiz)
+
+form.addEventListener('submit', event => {
+    score = 0;
+    event.preventDefault();
+
+    const userAnswers = getUserAnswers();
+    calculateScore(userAnswers);
+
+    showFinalScore();
+    animateFinalScore();
+})
 
 
 
