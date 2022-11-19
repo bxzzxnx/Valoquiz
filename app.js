@@ -1,4 +1,3 @@
-// TODO Refatorar código
 const form = document.querySelector('.quiz-form');
 const result = document.querySelector('.final-score');
 const correctAnswers = ['B','C','A','B','D','A','D','C'];
